@@ -141,6 +141,7 @@ const loadModelsFromFiles = async (files: File[]) => {
 
   for (const file of files) {
     if (file.name.endsWith('.frag')) {
+      console.log(`Loading file ${file.name}`)
       const fragBuffer = await file.arrayBuffer();
       const model = await fragments.load(fragBuffer, { modelId: file.name });
 
