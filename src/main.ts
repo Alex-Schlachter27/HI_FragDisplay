@@ -33,7 +33,16 @@ const grids = components.get(OBC.Grids);
 grids.create(world);
 
 // const workerUrl = "/node_modules/@thatopen/fragments/dist/Worker/worker.mjs";
-const workerUrl = "./worker.mjs";
+// const workerUrl = "./worker.mjs";
+const worker =
+  "https://thatopen.github.io/engine_fragment/resources/worker.mjs";
+const fetchedWorker = await fetch(worker);
+const workerText = await fetchedWorker.text();
+const workerFile = new File([new Blob([workerText])], "worker.mjs", {
+  type: "text/javascript",
+});
+const workerUrl = URL.createObjectURL(workerFile);
+
 const fragments = new FRAGS.FragmentsModels(workerUrl);
 console.log(fragments)
 
@@ -60,16 +69,17 @@ serializer.wasm = {
 // const model = await fragments.load(fragmentBytes, { modelId: "example" });
 
 // const fragFile = await fetch("./sample.frag");
+const fragFile = await fetch("./Duplex_A.frag");
 // const fragFile = await fetch("./assets/models/350104001_KA_A_50_HAA_XX_32-01_ARGA.frag");
-// const fragBuffer = await fragFile.arrayBuffer();
+const fragBuffer = await fragFile.arrayBuffer();
 
-// const loadModel = async () => {
-//   if (!fragBuffer) return;
-//   const model = await fragments.load(fragBuffer, { modelId: "example" });
-//   model.useCamera(world.camera.three);
-//   world.scene.three.add(model.object);
-//   await fragments.update(true);
-// };
+const loadModel = async () => {
+  if (!fragBuffer) return;
+  const model = await fragments.load(fragBuffer, { modelId: "example" });
+  model.useCamera(world.camera.three);
+  world.scene.three.add(model.object);
+  await fragments.update(true);
+};
 
 // const loadModelsFromFolder = async (folderPath: string = "./assets/models") => {
 //   try {
@@ -194,6 +204,7 @@ const [panel, updatePanel] = BUI.Component.create<BUI.PanelSection, any>(
       <bim-label style="white-space: normal;">💡Select and load .frag files</bim-label>
       <input type="file" id="file-input" multiple accept=".frag" style="display: none;" />
       <bim-button label="Load FRAG" @click=${selectModelFolder}></bim-button>
+      <bim-button label="Load example" @click=${loadModel}></bim-button>
     `;
     // if (fragBuffer) {
     //   content = BUI.html`
