@@ -32,8 +32,10 @@ components.init();
 const grids = components.get(OBC.Grids);
 grids.create(world);
 
-const workerUrl = "/node_modules/@thatopen/fragments/dist/Worker/worker.mjs";
+// const workerUrl = "/node_modules/@thatopen/fragments/dist/Worker/worker.mjs";
+const workerUrl = "./worker.mjs";
 const fragments = new FRAGS.FragmentsModels(workerUrl);
+console.log(fragments)
 
 world.camera.controls.addEventListener("update", () => fragments.update(true));
 world.camera.controls.addEventListener("rest", () => fragments.update(true));
@@ -144,6 +146,7 @@ const loadModelsFromFiles = async (files: File[]) => {
       console.log(`Loading file ${file.name}`)
       const fragBuffer = await file.arrayBuffer();
       const model = await fragments.load(fragBuffer, { modelId: file.name });
+      console.log(model)
 
       // Assuming you have Three.js set up and `world` and `camera` exist
       model.useCamera(world.camera.three);
