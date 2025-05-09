@@ -12,12 +12,12 @@ module.exports = {
   plugins: ["@typescript-eslint", "prettier"],
   ignorePatterns: ["**/dist/*", "**/node_modules/*", "**/*.json", "**/*.js"],
   rules: {
-    "prettier/prettier": [
-      "error",
-      {
-        endOfLine: "auto",
-      },
-    ],
+    // "prettier/prettier": [
+    //   "error",
+    //   {
+    //     endOfLine: "auto",
+    //   },
+    // ],
     indent: "off",
     "no-shadow": "off",
     "lines-between-class-members": "off",
@@ -60,6 +60,9 @@ module.exports = {
       env: {
         jest: true,
       },
+      rules: {
+        "no-unused-vars": "off", 
+      }
     },
   ],
 };

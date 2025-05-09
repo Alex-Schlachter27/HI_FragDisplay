@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import * as OBC from "@thatopen/components";
 import * as BUI from "@thatopen/ui";
-import * as THREE from "three";
+// import * as THREE from "three";
 import * as FRAGS from "@thatopen/fragments";
 // import { AppManager, InfoTable, InfoUI } from "./bim-components";
 
@@ -58,18 +58,16 @@ serializer.wasm = {
 // const model = await fragments.load(fragmentBytes, { modelId: "example" });
 
 // const fragFile = await fetch("./sample.frag");
-const fragFile = await fetch("./assets/models/350104001_KA_A_50_HAA_XX_32-01_ARGA.frag");
-const fragBuffer = await fragFile.arrayBuffer();
-// const model = await fragments.load(fragBuffer, { modelId: "example" });
+// const fragFile = await fetch("./assets/models/350104001_KA_A_50_HAA_XX_32-01_ARGA.frag");
+// const fragBuffer = await fragFile.arrayBuffer();
 
-
-const loadModel = async () => {
-  if (!fragBuffer) return;
-  const model = await fragments.load(fragBuffer, { modelId: "example" });
-  model.useCamera(world.camera.three);
-  world.scene.three.add(model.object);
-  await fragments.update(true);
-};
+// const loadModel = async () => {
+//   if (!fragBuffer) return;
+//   const model = await fragments.load(fragBuffer, { modelId: "example" });
+//   model.useCamera(world.camera.three);
+//   world.scene.three.add(model.object);
+//   await fragments.update(true);
+// };
 
 // const loadModelsFromFolder = async (folderPath: string = "./assets/models") => {
 //   try {
@@ -136,6 +134,7 @@ const loadModel = async () => {
 
 const loadModelsFromFiles = async (files: File[]) => {
   if (files.length === 0) {
+    // eslint-disable-next-line no-alert
     alert("No files selected.");
     return;
   }
@@ -171,21 +170,21 @@ const selectModelFolder = async () => {
   }
 }
 
-const removeModel = async () => {
-  await fragments.disposeModel("example");
-};
+// const removeModel = async () => {
+//   await fragments.disposeModel("example");
+// };
 
 const [panel, updatePanel] = BUI.Component.create<BUI.PanelSection, any>(
   (_) => {
-    const onDownload = () => {
-      if (!fragBuffer) return;
-      const file = new File([fragBuffer], "sample.frag");
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(file);
-      a.download = file.name;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    };
+    // const onDownload = () => {
+    //   if (!fragBuffer) return;
+    //   const file = new File([fragBuffer], "sample.frag");
+    //   const a = document.createElement("a");
+    //   a.href = URL.createObjectURL(file);
+    //   a.download = file.name;
+    //   a.click();
+    //   URL.revokeObjectURL(a.href);
+    // };
 
     const content = BUI.html`
       <bim-label style="white-space: normal;">💡Select and load .frag files</bim-label>

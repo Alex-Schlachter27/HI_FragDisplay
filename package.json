@@ -2,13 +2,13 @@
   "name": "frag-display",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Alex-Schlachter27.github.io/HI_FragDisplay",
+  "homepage": "https://alex-schlachter27.github.io/HI_FragDisplay/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",
