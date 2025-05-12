@@ -151,21 +151,34 @@ const loadModelsFromFiles = async (files: File[]) => {
     return;
   }
 
-  for (const file of files) {
-    if (file.name.endsWith('.frag')) {
-      console.log(`Loading file ${file.name}`)
-      const fragBuffer = await file.arrayBuffer();
-      const model = await fragments.load(fragBuffer, { modelId: file.name });
-      console.log(model)
+  const loader = document.getElementById("loader")!;
+  const filename = document.getElementById("loader-filename")!;
+  const bar = document.getElementById("loader-bar")!;
+  
+  loader.style.display = "block";
 
-      // Assuming you have Three.js set up and `world` and `camera` exist
-      model.useCamera(world.camera.three);
-      world.scene.three.add(model.object);
-      await fragments.update(true);
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (!file.name.endsWith('.frag')) continue;
+    console.log(`Loading file ${file.name}`)
 
-      console.log(`Loaded model from ${file.name}`);
-    }
+    filename.textContent = `Loading file: ${file.name} (${i+1}/${files.length})`;
+    bar.style.width = `${(i / files.length) * 100}%`;
+
+    const fragBuffer = await file.arrayBuffer();
+    const model = await fragments.load(fragBuffer, { modelId: file.name });
+    console.log(model)
+
+    // Assuming you have Three.js set up and `world` and `camera` exist
+    model.useCamera(world.camera.three);
+    world.scene.three.add(model.object);
+    await fragments.update(true);
+
+    console.log(`Loaded model from ${file.name}`);
   }
+
+  bar.style.width = `100%`;
+  filename.textContent = `✅ All files loaded`;
 };
 
 const selectModelFolder = async () => {
