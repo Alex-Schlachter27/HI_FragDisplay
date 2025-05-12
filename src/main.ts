@@ -69,12 +69,20 @@ serializer.wasm = {
 // const model = await fragments.load(fragmentBytes, { modelId: "example" });
 
 // const fragFile = await fetch("./sample.frag");
-const fragFile = await fetch("./Duplex_A.frag");
+// const fragFile = await fetch("./Duplex_A.frag");
 // const fragFile = await fetch("./assets/models/350104001_KA_A_50_HAA_XX_32-01_ARGA.frag");
-const fragBuffer = await fragFile.arrayBuffer();
+// const fragBuffer = await fragFile.arrayBuffer();
 
 const loadModel = async () => {
-  if (!fragBuffer) return;
+  const id = "school_arq";
+  // const id = "school_str";
+  // const id = "school_mep";
+  // const id = "small_test"; // does not wotk
+  const url = `https://thatopen.github.io/engine_fragment/resources/frags/${id}.frag`
+  console.log(url)
+  const file = await fetch(url);
+  const fragBuffer = await file.arrayBuffer();
+
   const model = await fragments.load(fragBuffer, { modelId: "example" });
   model.useCamera(world.camera.three);
   world.scene.three.add(model.object);
